@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: .
+    container_name: lionsss_nginx
+    restart: always
+    ports:
+      - "8080:80"
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: lionsss_tunnel
+    restart: always
+    command: tunnel --no-autoupdate run --token eyJhIjoiNmU0NzJkNzZkNDAwYjk3M2U5Yjg3ZjNlY2VhYjU4MmUiLCJ0IjoiYTdiMjkxNDAtOGUwYy00N2IxLWI0MDItYTQzZDRjYWMxYTA5IiwicyI6Ik9XTTBNbVEzT1RFdFkyRXhPUzAwWkdGa0xUazNORGN0Wm1Sa1pEbGxNV1k0TmpjeiJ9
+    depends_on:
+      - frontend
