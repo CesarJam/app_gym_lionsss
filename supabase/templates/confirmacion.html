@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirma tu cuenta en Lionsss Academy</title>
+  <style>
+    /* Estilos base para compatibilidad con clientes de correo */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #171717; /* neutral-900 */
+      color: #ffffff;
+    }
+    .wrapper {
+      width: 100%;
+      table-layout: fixed;
+      background-color: #171717;
+      padding: 40px 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #262626; /* neutral-800 */
+      border-radius: 8px;
+      overflow: hidden;
+      border-top: 4px solid #f97316; /* orange-500 */
+    }
+    .header {
+      text-align: center;
+      padding: 30px 20px;
+      background-color: #1f1f1f;
+    }
+    .header h1 {
+      margin: 0;
+      color: #f97316;
+      font-size: 28px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .content {
+      padding: 40px 30px;
+      text-align: center;
+    }
+    .content h2 {
+      color: #ffffff;
+      margin-top: 0;
+      font-size: 24px;
+    }
+    .content p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #d4d4d4; /* neutral-300 */
+      margin-bottom: 30px;
+    }
+    .button-container {
+      margin: 30px 0;
+    }
+    .button {
+      display: inline-block;
+      background-color: #f97316;
+      color: #000000 !important;
+      text-decoration: none;
+      padding: 16px 32px;
+      font-weight: bold;
+      border-radius: 4px;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+    .fallback {
+      font-size: 12px;
+      color: #a3a3a3;
+      word-break: break-all;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #404040;
+    }
+    .footer {
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #737373;
+      background-color: #1f1f1f;
+    }
+  </style>
+</head>
+<body>
+  <center class="wrapper">
+    <div class="container">
+      
+      <!-- Cabecera -->
+      <div class="header">
+        <h1>🦁 Lionsss Academy</h1>
+      </div>
+
+      <!-- Contenido Principal -->
+      <div class="content">
+        <h2>¡Bienvenido al equipo!</h2>
+        <p>Tu expediente ha sido registrado exitosamente. Para mantener tu información segura y activar tu cuenta de atleta, por favor confirma tu dirección de correo electrónico haciendo clic en el siguiente botón:</p>
+
+        <div style="background-color: #171717; border: 1px dashed #f97316; padding: 15px; margin: 20px 0; border-radius: 6px;">
+          <p style="margin: 0; font-size: 14px; color: #a3a3a3;">Tu contraseña de acceso temporal es:</p>
+          <p style="margin: 5px 0 0 0; font-size: 20px; color: #f97316; font-weight: bold; letter-spacing: 2px;">
+            {{ .Data.password_temporal }}
+          </p>
+          <p style="margin: 10px 0 0 0; font-size: 11px; color: #737373;">
+            (El sistema te pedirá cambiarla al iniciar sesión por primera vez)
+          </p>
+        </div>
+
+        <div class="button-container">
+          <a href="{{ .ConfirmationURL }}" class="button">Confirmar mi correo</a>
+        </div>
+
+      <!-- Pie de página -->
+      <div class="footer">
+        © 2026 Lionsss Academy. Todos los derechos reservados.<br>
+        Si no solicitaste este registro, por favor ignora este mensaje.
+      </div>
+
+    </div>
+  </center>
+</body>
+</html>

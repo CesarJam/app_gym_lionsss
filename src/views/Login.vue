@@ -1,24 +1,49 @@
 <template>
   <div class="login-container">
     <div class="login-box">
-      <img src="/images/logo.png" alt="Lionsss Logo" class="logo" v-if="false" /> <h2>ACCESO AL SISTEMA</h2>
+      <img
+        src="/images/logo.png"
+        alt="Lionsss Logo"
+        class="logo"
+        v-if="false"
+      />
+      <h2>ACCESO AL SISTEMA</h2>
       <p class="subtitle">Lionsss Academy</p>
 
       <form @submit.prevent="iniciarSesion">
         <div class="input-group">
           <label>Correo Electrónico</label>
-          <input type="email" v-model="email" placeholder="admin@lionsss.com" required />
+          <input
+            type="email"
+            v-model="email"
+            placeholder="admin@lionsss.com"
+            required
+          />
         </div>
 
         <div class="input-group">
           <label>Contraseña</label>
-          <input type="password" v-model="password" placeholder="••••••••" required />
+          <input
+            type="password"
+            v-model="password"
+            placeholder="••••••••"
+            required
+          />
         </div>
 
-        <p v-if="mensajeError" class="error-msg">{{ mensajeError }}</p>
+        <!-- Mensaje de Error Dinámico -->
+        <div
+          v-if="mensajeError"
+          :class="esErrorConfirmacion ? 'text-yellow-500' : 'text-red-500'"
+          class="text-sm text-center font-semibold mb-4 px-4"
+        >
+          <span v-if="esErrorConfirmacion">⚠️ </span>
+          <span v-else>❌ </span>
+          {{ mensajeError }}
+        </div>
 
         <button type="submit" class="btn-ingresar" :disabled="cargando">
-          {{ cargando ? 'Verificando...' : 'INGRESAR' }}
+          {{ cargando ? "Verificando..." : "INGRESAR" }}
         </button>
       </form>
     </div>
@@ -26,40 +51,46 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { supabase } from '../supabase.js' // Asegúrate de que la ruta sea correcta
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { supabase } from "../supabase.js";
 
-const email = ref('')
-const password = ref('')
-const mensajeError = ref('')
-const cargando = ref(false)
-const router = useRouter()
+const email = ref("");
+const password = ref("");
+const mensajeError = ref("");
+const esErrorConfirmacion = ref(false);
+const cargando = ref(false);
+const router = useRouter();
 
 const iniciarSesion = async () => {
   try {
-    cargando.value = true
-    mensajeError.value = ''
+    cargando.value = true;
+    mensajeError.value = null;
+    esErrorConfirmacion.value = false;
 
-    // Petición a Supabase para iniciar sesión
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email.value,
       password: password.value,
-    })
+    });
 
-    if (error) throw error
+    if (error) {
+      if (error.message.includes("Email not confirmed")) {
+        esErrorConfirmacion.value = true;
+        throw new Error(
+          "Falta confirmación. Revisa tu correo y haz clic en el enlace para activar tu cuenta.",
+        );
+      } else {
+        throw new Error("Credenciales incorrectas. Intenta de nuevo.");
+      }
+    }
 
-    // Si todo sale bien, lo mandamos al panel de control
-    console.log("¡Sesión iniciada!", data)
-    router.push('/dashboard') 
-
+    router.push("/dashboard");
   } catch (error) {
-    mensajeError.value = 'Credenciales incorrectas. Intenta de nuevo.'
-    console.error(error.message)
+    mensajeError.value = error.message;
   } finally {
-    cargando.value = false
+    cargando.value = false;
   }
-}
+};
 </script>
 
 <style scoped>
