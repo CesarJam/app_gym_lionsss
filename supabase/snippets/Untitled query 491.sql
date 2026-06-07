@@ -1,0 +1,1 @@
+alter table asesorados add column url_foto text;
