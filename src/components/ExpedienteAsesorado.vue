@@ -69,7 +69,7 @@
           <div class="flex flex-col items-center gap-2">
             <img
               :src="
-                asesorado.url_foto ? asesorado.url_foto : 'http://127.0.0.1:54321/storage/v1/object/public/fotos-asesorados/fotos/default-avatar.png'
+                asesorado.url_foto ? asesorado.url_foto : '/images/logo.png'
               "
               class="w-24 h-24 md:w-32 md:h-32 rounded-lg border-2 border-orange-500 object-cover shadow-xl"
               alt="Foto de perfil"
