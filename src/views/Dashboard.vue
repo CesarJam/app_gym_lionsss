@@ -27,7 +27,15 @@
             Mis Asesorados
           </a>
         </li>
+        <!-- En tu sección de navegación (Dashboard.vue) -->
+      <li v-if="rolUsuario === 'asesorado'">
+        <a href="#" @click.prevent="vistaActual = 'mi-perfil'" 
+          :class="['block p-4 transition duration-300 no-underline', vistaActual === 'mi-perfil' ? 'bg-neutral-800 text-orange-500 border-l-4 border-orange-500' : 'text-neutral-400 hover:bg-neutral-800 hover:text-orange-500']">
+          Mi Perfil
+        </a>
+      </li>
       </ul>
+      
 
       <div class="p-5 border-t border-neutral-800">
         <button @click="cerrarSesion" class="w-full p-2.5 bg-transparent border border-red-500 text-red-500 rounded-md cursor-pointer transition duration-300 hover:bg-red-500 hover:text-white">
@@ -66,6 +74,10 @@
       <div v-else-if="vistaActual === 'asesorados' && rolUsuario === 'entrenador'">
         <MisAsesorados />
       </div>
+
+      <div v-else-if="vistaActual === 'mi-perfil' && rolUsuario === 'asesorado'">
+        <ExpedienteAsesorado :idAsesorado="miIdAsesorado" @volver="vistaActual = 'inicio'" />
+      </div>
     </main>
   </div>
 </template>
@@ -76,6 +88,7 @@ import { useRouter } from "vue-router";
 import { supabase } from "../supabase.js";
 import Entrenadores from "../components/Entrenadores.vue";
 import MisAsesorados from "../components/MisAsesorados.vue"; 
+import ExpedienteAsesorado from "../components/ExpedienteAsesorado.vue";
 
 const router = useRouter();
 const nombreUsuario = ref("Cargando...");
@@ -84,6 +97,7 @@ const vistaActual = ref("inicio");
 
 const totalEntrenadores = ref(0);
 const totalAsesorados = ref(0);
+const miIdAsesorado = ref(null);
 
 onMounted(async () => {
   await obtenerPerfil();
@@ -106,11 +120,24 @@ const obtenerPerfil = async () => {
       nombreUsuario.value = data.nombre_completo;
       rolUsuario.value = data.rol;
 
+      // Lógica nueva: Si es asesorado, buscamos su ID en la tabla asesorados
+      if (rolUsuario.value === 'asesorado') {
+        const { data: asesoradoData } = await supabase
+          .from("asesorados")
+          .select("id")
+          .eq("id_auth", user.id) // Usamos id_auth que vincula al usuario
+          .single();
+        
+        if (asesoradoData) {
+          miIdAsesorado.value = asesoradoData.id;
+        }
+      }
+
       await obtenerEstadisticas(user.id);
     }
   } catch (error) {
     console.error("Error al obtener el perfil:", error.message);
-    nombreUsuario.value = "Jefe";
+    nombreUsuario.value = "Usuario";
   }
 };
 

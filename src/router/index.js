@@ -32,6 +32,12 @@ const router = createRouter({
       path: '/verificado',
       name: 'Verificado',
       component: Verificado
+    },
+    {
+      path: '/mi-perfil',
+      name: 'mi-perfil',
+      component: () => import('../views/MiPerfil.vue'),
+      meta: { requiresAuth: true }
     }
   ]
 })

@@ -67,18 +67,7 @@
           1. Datos Básicos
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-          <div class="flex flex-col md:col-span-2">
-            <label class="text-sm text-neutral-400 mb-1">Foto de Perfil</label>
-            <input
-              type="file"
-              @change="handleFileUpload"
-              accept="image/*"
-              class="input-lionsss"
-            />
-            <p class="text-xs text-neutral-500 mt-1">
-              Sube una foto clara de frente.
-            </p>
-          </div>
+          
           <div class="flex flex-col">
             <label class="text-sm text-neutral-400 mb-1">Nombre Completo</label>
             <input
@@ -337,27 +326,7 @@ const mensajeError = ref(null);
 const registroCompletado = ref(false);
 const tokenActual = ref(null);
 
-const fotoFile = ref(null)
 
-const handleFileUpload = (event) => {
-  fotoFile.value = event.target.files[0]
-}
-
-const subirFoto = async (asesoradoId) => {
-  if (!fotoFile.value) return null
-  
-  const fileExt = fotoFile.value.name.split('.').pop()
-  const fileName = `${asesoradoId}-${Math.random()}.${fileExt}`
-  
-  const { error } = await supabase.storage
-    .from('fotos-asesorados')
-    .upload(fileName, fotoFile.value)
-    
-  if (error) throw error
-  
-  const { data } = supabase.storage.from('fotos-asesorados').getPublicUrl(fileName)
-  return data.publicUrl
-}
 
 const form = ref({
   nombre_completo: "",
@@ -429,12 +398,9 @@ const verificarToken = async () => {
 const guardarDatos = async () => {
   try {
     guardando.value = true
-    
-    let urlFoto = null
-    if (fotoFile.value) {
-      urlFoto = await subirFoto(tokenActual.value)
-    }
+    console.log("Iniciando proceso de guardado...");
 
+    // 1. CREAMOS LA CUENTA DE USUARIO
     const numAleatorio = Math.floor(1000 + Math.random() * 9000);
     const passwordTemp = `Lionsss-${numAleatorio}!`;
 
@@ -448,15 +414,21 @@ const guardarDatos = async () => {
       }
     });
     if (authError) throw authError;
+    console.log("Usuario creado correctamente.");
 
+    // 2. CREAMOS EL PERFIL
     const { error: perfilError } = await supabase.from('perfiles').insert([
-      { id: authData.user.id, nombre_completo: form.value.nombre_completo, rol: 'asesorado' }
+      { 
+        id: authData.user.id, 
+        nombre_completo: form.value.nombre_completo, 
+        rol: 'asesorado' 
+      }
     ]);
     if (perfilError) throw perfilError;
 
+    // 3. ACTUALIZAMOS EL EXPEDIENTE EN LA TABLA ASESORADOS
     const datosActualizados = {
       ...form.value,
-      url_foto: urlFoto,
       id_auth: authData.user.id,
       estado_registro: 'completado'
     }
@@ -468,9 +440,12 @@ const guardarDatos = async () => {
 
     if (updateError) throw updateError
 
+    // ÉXITO TOTAL
     registroCompletado.value = true;
+    console.log("Expediente guardado y usuario registrado.");
 
   } catch (error) {
+    console.error("Error en el registro:", error);
     Swal.fire('Error', 'Hubo un problema: ' + error.message, 'error')
   } finally {
     guardando.value = false

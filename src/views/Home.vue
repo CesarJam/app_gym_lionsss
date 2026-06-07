@@ -60,7 +60,7 @@ onUnmounted(() => {
             </a>
 
             <a href="/admin/login" class="btn-nav-admin" @click="closeMenu">
-                LOGIN ADMIN
+                INGRESAR
             </a>
         </div>
     </nav>
