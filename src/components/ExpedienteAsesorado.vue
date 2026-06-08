@@ -68,9 +68,7 @@
         >
           <div class="flex flex-col items-center gap-2">
             <img
-              :src="
-                asesorado.url_foto ? asesorado.url_foto : '/images/logo.png'
-              "
+              :src="imagenPerfil"
               class="w-24 h-24 md:w-32 md:h-32 rounded-lg border-2 border-orange-500 object-cover shadow-xl"
               alt="Foto de perfil"
             />
@@ -502,6 +500,7 @@
 import { ref, onMounted } from "vue";
 import { supabase } from "../supabase.js";
 import Swal from "sweetalert2";
+import { computed } from "vue";
 
 const props = defineProps(["idAsesorado"]);
 defineEmits(["volver"]);
@@ -574,4 +573,12 @@ const guardarCambios = async () => {
 };
 
 onMounted(cargarExpediente);
+
+const imagenPerfil = computed(() => {
+  const url = asesorado.value?.url_foto;
+  if (!url || typeof url !== 'string' || url.trim() === '') {
+    return '/images/logo.png';
+  }
+  return url;
+});
 </script>
