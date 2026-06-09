@@ -1,13 +1,20 @@
 version: '3.8'
 
 services:
+  # Servicio Frontend (tu app Vue)
   frontend:
     build: .
     container_name: lionsss_nginx
     restart: always
     ports:
       - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./dist:/usr/share/nginx/html:ro
+    networks:
+      - lionsss_net
 
+  # Servicio Tunnel (Cloudflare)
   tunnel:
     image: cloudflare/cloudflared:latest
     container_name: lionsss_tunnel
@@ -15,3 +22,22 @@ services:
     command: tunnel --no-autoupdate run --token eyJhIjoiNmU0NzJkNzZkNDAwYjk3M2U5Yjg3ZjNlY2VhYjU4MmUiLCJ0IjoiYTdiMjkxNDAtOGUwYy00N2IxLWI0MDItYTQzZDRjYWMxYTA5IiwicyI6Ik9XTTBNbVEzT1RFdFkyRXhPUzAwWkdGa0xUazNORGN0Wm1Sa1pEbGxNV1k0TmpjeiJ9
     depends_on:
       - frontend
+    networks:
+      - lionsss_net
+
+  # Servicio App (la configuración de puerto 80 que tenías)
+  app:
+    build: .
+    container_name: lionsss_app_web
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./dist:/usr/share/nginx/html:ro
+    networks:
+      - lionsss_net
+
+networks:
+  lionsss_net:
+    driver: bridge
