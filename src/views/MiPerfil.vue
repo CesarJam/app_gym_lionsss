@@ -1,6 +1,6 @@
 <template>
   <div class="p-6">
-    <h1 class="text-3xl font-bold text-white mb-6">Mi Perfil</h1>
+    <h1 class="text-3xl font-bold text-white mb-6">Mi Perfil PRUEBA</h1>
     
     <ExpedienteAsesorado 
       v-if="asesoradoId" 

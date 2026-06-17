@@ -1,31 +1,110 @@
 <template>
-  <div class="flex min-h-screen bg-neutral-900 text-white">
-    <nav class="w-64 bg-black border-r border-neutral-800 flex flex-col">
-      <div class="p-5 text-center border-b border-neutral-800">
+  <!-- Contenedor principal: Ocupa toda la pantalla, evita scroll innecesario y aplica fondo principal -->
+  <div
+    class="flex h-screen bg-[#222222] text-[#FAFAFA] overflow-hidden font-montserrat"
+  >
+    <!-- BARRA SUPERIOR MÓVIL (Solo visible en pantallas pequeñas) -->
+    <div
+      class="md:hidden fixed top-0 left-0 w-full bg-[#171717] border-b border-[#3B3B3B] z-40 flex justify-between items-center p-4 shadow-md"
+    >
+      <div class="flex items-center gap-3">
         <img
           src="/images/logo.png"
-          class="w-20 h-20 mx-auto mb-2 object-contain"
+          class="h-10 w-auto object-contain"
           alt="Logo Lionsss"
         />
-        <h2 class="text-orange-500 font-bold tracking-widest text-xl m-0">
+        <h2
+          class="text-[#D4D4D4] font-black tracking-widest text-lg m-0 uppercase leading-tight"
+        >
+          Lionsss <br /><span class="text-[#888888] text-xs">Academy</span>
+        </h2>
+      </div>
+      <button @click="toggleMenu" class="text-[#D4D4D4] focus:outline-none">
+        <!-- Icono de Hamburguesa SVG -->
+        <svg
+          v-if="!menuAbierto"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-8 h-8"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+          />
+        </svg>
+        <!-- Icono de X (Cerrar) SVG -->
+        <svg
+          v-else
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-8 h-8"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <!-- OVERLAY OSCURO PARA MÓVILES (Fondo semitransparente cuando el menú está abierto) -->
+    <div
+      v-if="menuAbierto"
+      @click="menuAbierto = false"
+      class="fixed inset-0 bg-black/60 z-40 md:hidden transition-opacity"
+    ></div>
+
+    <!-- SIDEBAR (Barra Lateral) -->
+    <nav
+      :class="[
+        menuAbierto ? 'translate-x-0' : '-translate-x-full',
+        'md:translate-x-0',
+      ]"
+      class="fixed md:static inset-y-0 left-0 w-64 bg-[#3B3B3B] border-r border-[#3B3B3B] flex flex-col z-50 transition-transform duration-300 ease-in-out shadow-2xl md:shadow-none"
+    >
+      <!-- Cabecera del Sidebar (Solo visible en escritorio, en móvil está en la barra superior) -->
+      <div class="hidden md:block p-6 text-center border-b border-[#3B3B3B]">
+        <img
+          src="/images/logo.png"
+          class="w-20 h-20 mx-auto mb-3 object-contain"
+          alt="Logo Lionsss"
+        />
+        <h2
+          class="text-[#D4D4D4] font-black tracking-widest text-xl m-0 uppercase"
+        >
           Lionsss
         </h2>
-        <h2 class="text-orange-500 font-bold tracking-widest text-xl m-0">
+        <h2
+          class="text-[#D4D4D4] font-black tracking-widest text-xl m-0 uppercase"
+        >
           Academy
         </h2>
-        <p class="text-sm text-neutral-500 mt-1">Dashboard</p>
+        <p
+          class="text-xs text-[#888888] mt-2 tracking-widest uppercase font-bold"
+        >
+          Dashboard
+        </p>
       </div>
 
-      <ul class="flex-grow p-0 m-0 list-none">
+      <!-- Enlaces de Navegación -->
+      <ul class="flex-grow overflow-y-auto p-0 m-0 list-none mt-4 md:mt-0">
         <li>
           <a
             href="#"
-            @click.prevent="vistaActual = 'inicio'"
+            @click.prevent="seleccionarVista('inicio')"
             :class="[
-              'block p-4 transition duration-300 no-underline',
+              'block p-4 transition-all duration-300 no-underline font-bold text-sm uppercase tracking-wide',
               vistaActual === 'inicio'
-                ? 'bg-neutral-800 text-orange-500 border-l-4 border-orange-500'
-                : 'text-neutral-400 hover:bg-neutral-800 hover:text-orange-500',
+                ? 'bg-[#222222] text-[#FAFAFA] border-l-4 border-[#D4D4D4]'
+                : 'text-[#888888] hover:bg-[#222222]/50 hover:text-[#D4D4D4] hover:border-l-4 hover:border-[#555555]',
             ]"
           >
             Panel Principal
@@ -35,12 +114,12 @@
         <li v-if="rolUsuario === 'superadmin'">
           <a
             href="#"
-            @click.prevent="vistaActual = 'entrenadores'"
+            @click.prevent="seleccionarVista('entrenadores')"
             :class="[
-              'block p-4 transition duration-300 no-underline',
+              'block p-4 transition-all duration-300 no-underline font-bold text-sm uppercase tracking-wide',
               vistaActual === 'entrenadores'
-                ? 'bg-neutral-800 text-orange-500 border-l-4 border-orange-500'
-                : 'text-neutral-400 hover:bg-neutral-800 hover:text-orange-500',
+                ? 'bg-[#222222] text-[#FAFAFA] border-l-4 border-[#D4D4D4]'
+                : 'text-[#888888] hover:bg-[#222222]/50 hover:text-[#D4D4D4] hover:border-l-4 hover:border-[#555555]',
             ]"
           >
             Entrenadores
@@ -50,27 +129,27 @@
         <li v-if="rolUsuario === 'entrenador'">
           <a
             href="#"
-            @click.prevent="vistaActual = 'asesorados'"
+            @click.prevent="seleccionarVista('asesorados')"
             :class="[
-              'block p-4 transition duration-300 no-underline',
+              'block p-4 transition-all duration-300 no-underline font-bold text-sm uppercase tracking-wide',
               vistaActual === 'asesorados'
-                ? 'bg-neutral-800 text-orange-500 border-l-4 border-orange-500'
-                : 'text-neutral-400 hover:bg-neutral-800 hover:text-orange-500',
+                ? 'bg-[#222222] text-[#FAFAFA] border-l-4 border-[#D4D4D4]'
+                : 'text-[#888888] hover:bg-[#222222]/50 hover:text-[#D4D4D4] hover:border-l-4 hover:border-[#555555]',
             ]"
           >
             Mis Asesorados
           </a>
         </li>
-        <!-- En tu sección de navegación (Dashboard.vue) -->
+
         <li v-if="rolUsuario === 'asesorado'">
           <a
             href="#"
-            @click.prevent="vistaActual = 'mi-perfil'"
+            @click.prevent="seleccionarVista('mi-perfil')"
             :class="[
-              'block p-4 transition duration-300 no-underline',
+              'block p-4 transition-all duration-300 no-underline font-bold text-sm uppercase tracking-wide',
               vistaActual === 'mi-perfil'
-                ? 'bg-neutral-800 text-orange-500 border-l-4 border-orange-500'
-                : 'text-neutral-400 hover:bg-neutral-800 hover:text-orange-500',
+                ? 'bg-[#222222] text-[#FAFAFA] border-l-4 border-[#D4D4D4]'
+                : 'text-[#888888] hover:bg-[#222222]/50 hover:text-[#D4D4D4] hover:border-l-4 hover:border-[#555555]',
             ]"
           >
             Mi Perfil
@@ -78,76 +157,104 @@
         </li>
       </ul>
 
-      <div class="p-5 border-t border-neutral-800">
+      <!-- Botón de Cerrar Sesión -->
+      <div class="p-5 border-t border-[#3B3B3B]">
         <button
           @click="cerrarSesion"
-          class="w-full p-2.5 bg-transparent border border-red-500 text-red-500 rounded-md cursor-pointer transition duration-300 hover:bg-red-500 hover:text-white"
+          class="w-full py-3 px-4 bg-transparent border-2 border-red-900/50 text-red-500 font-bold uppercase tracking-wide text-sm rounded-lg transition-all duration-300 hover:bg-red-500 hover:text-white hover:border-red-500"
         >
           Cerrar Sesión
         </button>
       </div>
     </nav>
 
-    <main class="flex-grow p-8">
-      <div v-if="vistaActual === 'inicio'">
+    <!-- ÁREA PRINCIPAL DE CONTENIDO -->
+    <!-- pt-24 asegura que el contenido no quede oculto detrás de la barra superior en móviles -->
+    <main class="flex-1 overflow-y-auto p-4 pt-24 md:p-8 md:pt-8 scroll-smooth">
+      <div v-if="vistaActual === 'inicio'" class="max-w-5xl mx-auto">
         <header class="mb-8">
-          <h1 class="text-3xl font-light mt-0 mb-4">
-            Bienvenido, {{ nombreUsuario }} 🦁
+          <h1
+            class="flex flex-wrap items-center gap-3 text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight mt-0 mb-3 text-[#FAFAFA]"
+          >
+            <span
+              >Bienvenido,
+              <span class="text-[#D4D4D4]">{{ nombreUsuario }}</span></span
+            >
+
+            <img
+              src="/images/brave-svgrepo-com.svg"
+              alt="Logo León"
+              class="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 drop-shadow-md transition-transform hover:scale-150"
+            />
           </h1>
           <span
-            class="bg-orange-500 text-neutral-900 px-2 py-1 rounded text-xs font-bold uppercase tracking-wide"
+            class="bg-[#D4D4D4] text-[#222222] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest shadow-[0_0_10px_rgba(212,212,212,0.2)]"
           >
             {{ rolUsuario }}
           </span>
         </header>
 
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Tarjetas de Estadísticas Responsivas -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
           <div
             v-if="rolUsuario === 'superadmin'"
-            class="bg-neutral-800 p-5 rounded-lg text-center shadow-md"
+            class="bg-[#3B3B3B] p-6 md:p-8 rounded-xl text-center shadow-lg border border-[#3B3B3B] transition-transform duration-300 hover:-translate-y-1"
           >
-            <h3 class="text-sm text-neutral-400 m-0 mb-2.5">
-              Entrenadores en el Sistema
+            <h3
+              class="text-xs md:text-sm font-bold text-[#888888] uppercase tracking-widest mb-3"
+            >
+              Entrenadores
             </h3>
-            <!-- Cambiamos el 2 por la variable reactiva -->
-            <p class="text-4xl font-bold text-orange-500 m-0">
+            <p
+              class="text-5xl md:text-6xl font-black text-[#D4D4D4] m-0 drop-shadow-md"
+            >
               {{ totalEntrenadores }}
             </p>
           </div>
-          <div class="bg-neutral-800 p-5 rounded-lg text-center shadow-md">
-            <h3 class="text-sm text-neutral-400 m-0 mb-2.5">
+
+          <div
+            class="bg-[#3B3B3B] p-6 md:p-8 rounded-xl text-center shadow-lg border border-[#3B3B3B] transition-transform duration-300 hover:-translate-y-1"
+          >
+            <h3
+              class="text-xs md:text-sm font-bold text-[#888888] uppercase tracking-widest mb-3"
+            >
               {{
                 rolUsuario === "superadmin" ? "Total Atletas" : "Mis Asesorados"
               }}
             </h3>
-            <!-- Cambiamos el 0 por la variable reactiva -->
-            <p class="text-4xl font-bold text-orange-500 m-0">
+            <p
+              class="text-5xl md:text-6xl font-black text-[#D4D4D4] m-0 drop-shadow-md"
+            >
               {{ totalAsesorados }}
             </p>
           </div>
         </section>
       </div>
 
+      <!-- Vistas Condicionales de Componentes -->
       <div
         v-else-if="
           vistaActual === 'entrenadores' && rolUsuario === 'superadmin'
         "
+        class="max-w-7xl mx-auto"
       >
         <Entrenadores />
       </div>
 
       <div
         v-else-if="vistaActual === 'asesorados' && rolUsuario === 'entrenador'"
+        class="max-w-7xl mx-auto"
       >
         <MisAsesorados />
       </div>
 
       <div
         v-else-if="vistaActual === 'mi-perfil' && rolUsuario === 'asesorado'"
+        class="max-w-7xl mx-auto"
       >
         <ExpedienteAsesorado
           :idAsesorado="miIdAsesorado"
-          @volver="vistaActual = 'inicio'"
+          @volver="seleccionarVista('inicio')"
         />
       </div>
     </main>
@@ -170,6 +277,19 @@ const vistaActual = ref("inicio");
 const totalEntrenadores = ref(0);
 const totalAsesorados = ref(0);
 const miIdAsesorado = ref(null);
+
+// Lógica de UI para móvil
+const menuAbierto = ref(false);
+
+const toggleMenu = () => {
+  menuAbierto.value = !menuAbierto.value;
+};
+
+// Función para cambiar la vista y cerrar el menú móvil simultáneamente
+const seleccionarVista = (vista) => {
+  vistaActual.value = vista;
+  menuAbierto.value = false;
+};
 
 onMounted(async () => {
   await obtenerPerfil();
@@ -195,12 +315,11 @@ const obtenerPerfil = async () => {
       nombreUsuario.value = data.nombre_completo;
       rolUsuario.value = data.rol;
 
-      // Lógica nueva: Si es asesorado, buscamos su ID en la tabla asesorados
       if (rolUsuario.value === "asesorado") {
         const { data: asesoradoData } = await supabase
           .from("asesorados")
           .select("id")
-          .eq("id_auth", user.id) // Usamos id_auth que vincula al usuario
+          .eq("id_auth", user.id)
           .single();
 
         if (asesoradoData) {
@@ -219,20 +338,17 @@ const obtenerPerfil = async () => {
 const obtenerEstadisticas = async (miId) => {
   try {
     if (rolUsuario.value === "superadmin") {
-      // Si es Superadmin, cuenta TODOS los entrenadores
       const { count: countEntrenadores } = await supabase
         .from("perfiles")
         .select("*", { count: "exact", head: true })
         .eq("rol", "entrenador");
       totalEntrenadores.value = countEntrenadores || 0;
 
-      // Y cuenta TODOS los asesorados globales
       const { count: countAtletas } = await supabase
         .from("asesorados")
         .select("*", { count: "exact", head: true });
       totalAsesorados.value = countAtletas || 0;
     } else if (rolUsuario.value === "entrenador") {
-      // Si es Entrenador, cuenta SOLO los asesorados que le pertenecen
       const { count: countMisAsesorados } = await supabase
         .from("asesorados")
         .select("*", { count: "exact", head: true })
@@ -253,3 +369,12 @@ const cerrarSesion = async () => {
   }
 };
 </script>
+
+<style scoped>
+/* Aseguramos que la tipografía aplique a todo el dashboard[cite: 2] */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap");
+
+.font-montserrat {
+  font-family: "Montserrat", sans-serif;
+}
+</style>

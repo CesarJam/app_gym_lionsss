@@ -14,7 +14,7 @@ const closeMenu = () => {
 
 // --- LÓGICA DEL CARRUSEL ---
 const currentSlide = ref(0)
-const totalSlides = 3
+const totalSlides = 6
 const carouselStyle = ref('transform: translateX(0%)')
 
 const updateCarousel = () => {
@@ -45,261 +45,258 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <nav class="navbar">
-        <div class="logo">
-            <img src="/images/logo.png" alt="Lionsss Academy Logo">
-        </div>
-
-        <button class="hamburger" @click="toggleMenu" aria-label="Menú">
-            &#9776;
-        </button>
-
-        <div class="nav-buttons" :class="{ active: isMenuActive }">
-            <a href="/trainer/login" @click="closeMenu">
-                ENTRENADORES
-            </a>
-
-            <a href="/admin/login" class="btn-nav-admin" @click="closeMenu">
-                INGRESAR
-            </a>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>BIENVENIDO A <br> <span>LA MANADA</span></h1>
-            <p>La plataforma definitiva para gestionar tu rendimiento, tus socios y tu éxito.</p>
-
-            <div class="cta-container">
-            <router-link to="/admin/login" class="btn btn-primary">GESTIONAR GIMNASIO</router-link>
-                <a href="/trainer/login" class="btn btn-outline">SOY ENTRENADOR</a>
+    <!-- Fondo principal aplicado a un div envolvente o al body vía directivas globales. Aquí lo aplicamos al contenedor principal -->
+    <div class="min-h-screen bg-[#222222] text-[#FAFAFA] font-montserrat overflow-x-hidden">
+        
+        <!-- NAVBAR -->
+        <nav class="fixed top-0 left-0 w-full z-[9999] bg-[#222222]/95 backdrop-blur-md border-b border-[#3B3B3B] flex justify-between items-center px-4 md:px-8 py-3 md:py-4 transition-all duration-300">
+            <div class="flex items-center">
+                <img src="/images/logo.png" alt="Lionsss Academy Logo" class="h-12 md:h-16 w-auto transition-transform duration-300 hover:scale-105">
             </div>
-        </div>
-    </section>
 
-    <section class="info-bar">
-        <div class="info-item">
-            <div class="info-icon">📍</div>
-            <div class="info-text">
-                <h4>Ubicación Central</h4>
-                <p>Chilpancingo, Gro.</p>
+            <!-- Botón Hamburguesa Móvil -->
+            <button class="md:hidden text-[#D4D4D4] text-3xl focus:outline-none z-[10000]" @click="toggleMenu" aria-label="Menú">
+                &#9776;
+            </button>
+
+            <!-- Enlaces Nav -->
+            <div :class="isMenuActive ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4 md:opacity-100 md:visible md:translate-y-0'" 
+                 class="absolute top-full left-0 w-full md:w-auto md:static bg-[#222222]/98 md:bg-transparent border-b-2 border-[#555555] md:border-none flex flex-col md:flex-row md:items-center gap-0 md:gap-6 transition-all duration-300 ease-in-out shadow-xl md:shadow-none">
+                
+                
+
+                <div class="p-4 md:p-0 flex justify-center">
+                    <a href="/admin/login" @click="closeMenu" class="inline-block border border-[#D4D4D4] text-[#D4D4D4] font-bold px-6 py-2 rounded-full hover:bg-[#D4D4D4] hover:text-[#222222] transition-all duration-300 text-lg md:text-sm">
+                        INGRESAR
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="info-item">
-            <div class="info-icon">⚡</div>
-            <div class="info-text">
-                <h4>Sistema Online</h4>
-                <p>Disponible 24/7</p>
+        </nav>
+
+        <!-- HERO SECTION -->
+        <section class="mt-[70px] md:mt-[90px] h-[600px] md:h-[850px] w-full flex items-center justify-center text-center relative px-4 bg-cover bg-center bg-no-repeat" style="background-image: url('/images/portada.png');">
+            <!-- Overlay oscuro -->
+            <div class="absolute inset-0 bg-gradient-to-b from-[#222222]/60 to-[#222222]/95 z-0"></div>
+            
+            <div class="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
+                <h1 class="text-3xl sm:text-5xl md:text-7xl font-black uppercase leading-tight mb-4 text-[#FAFAFA] drop-shadow-xl">
+                    BIENVENIDO A <br> 
+                    <span class="text-[#D4D4D4] block mt-2">LA MANADA</span>
+                </h1>
+                <p class="text-sm sm:text-base md:text-xl mb-8 text-[#BBBBBB] drop-shadow-md max-w-2xl px-2">
+                    La plataforma definitiva para gestionar tu rendimiento, tus socios y tu éxito.
+                </p>
+
+                <!-- Botones CTA -->
+                <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-4 justify-center items-center px-4 sm:px-0">
+                    <router-link to="/admin/login" class="w-full sm:w-auto px-6 py-4 md:px-10 rounded-full font-extrabold text-sm md:text-base uppercase tracking-wide bg-[#D4D4D4] text-[#222222] transition-all duration-300 hover:bg-[#FAFAFA] hover:-translate-y-1 shadow-[0_0_15px_rgba(212,212,212,0.3)] hover:shadow-[0_0_25px_rgba(212,212,212,0.6)] text-center">
+                        GESTIONAR GIMNASIO
+                    </router-link>
+                    
+                </div>
             </div>
-        </div>
-        <div class="info-item">
-            <div class="info-icon">🦁</div>
-            <div class="info-text">
-                <h4>Comunidad Lionsss</h4>
-                <p>Solo para campeones</p>
+        </section>
+
+        <!-- INFO BAR -->
+        <section class="bg-[#171717] py-10 px-4 flex flex-col md:flex-row justify-center items-center md:items-start gap-8 md:gap-16 border-b border-[#3B3B3B]">
+            
+            <!-- Item 1: Ubicación -->
+            <div class="flex flex-col sm:flex-row items-center text-center sm:text-left gap-4">
+                <div class="text-[#D4D4D4] flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
+                        <path fill-rule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-[#EEEEEE]">Ubicación Central</h4>
+                    <p class="text-sm text-[#888888]">Chilpancingo, Gro.</p>
+                </div>
             </div>
-        </div>
-    </section>
 
-    <section class="gallery-section">
-        <h2 class="gallery-title">Nuestras <span>Instalaciones</span></h2>
-
-        <div class="carousel-container">
-            <button class="carousel-btn btn-prev" @click="prevSlide">&#10094;</button>
-            <button class="carousel-btn btn-next" @click="nextSlide">&#10095;</button>
-
-            <div class="carousel-track" :style="carouselStyle">
-                <div class="carousel-slide"><img src="/images/carrusel/gym-1.jpg" alt="Instalaciones 1"></div>
-                <div class="carousel-slide"><img src="/images/carrusel/gym-2.jpg" alt="Instalaciones 2"></div>
-                <div class="carousel-slide"><img src="/images/carrusel/gym-3.jpg" alt="Instalaciones 3"></div>
+            <!-- Item 2: Sistema Online -->
+            <div class="flex flex-col sm:flex-row items-center text-center sm:text-left gap-4">
+                <div class="text-[#D4D4D4] flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
+                        <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-[#EEEEEE]">Sistema Online</h4>
+                    <p class="text-sm text-[#888888]">Disponible 24/7</p>
+                </div>
             </div>
-        </div>
-    </section>
 
-    <footer>
-        &copy; 2026 Lionsss Academy. Powered by Vue & Supabase.
-    </footer>
+            <!-- Item 3: Comunidad -->
+            <div class="flex flex-col sm:flex-row items-center text-center sm:text-left gap-4">
+                <div class="text-[#D4D4D4] flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 0 1 3 3h-15a3 3 0 0 1 3-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 0 1-.982-3.172M9.497 14.25a7.454 7.454 0 0 0 .981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 0 0 7.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 0 0 2.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 0 1 2.916.52 6.003 6.003 0 0 1-5.395 4.972m0 0a6.726 6.726 0 0 1-2.749 1.35m0 0a6.772 6.772 0 0 1-3.044 0" />
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-[#EEEEEE]">Comunidad Lionsss</h4>
+                    <p class="text-sm text-[#888888]">Solo para campeones</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- GALERÍA / CARRUSEL -->
+        <section class="py-16 px-4 text-center bg-[#222222]">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-black uppercase mb-10 text-[#FAFAFA]">
+                Nosotros...<span class="text-[#D4D4D4]"> </span>
+            </h2>
+
+            <div class="relative max-w-4xl mx-auto overflow-hidden rounded-xl border border-[#555555] shadow-2xl">
+                <!-- Botones Carrusel -->
+                <button class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#555555] text-[#FAFAFA] text-2xl px-3 py-2 rounded-lg z-10 transition-colors" @click="prevSlide">
+                    &#10094;
+                </button>
+                <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#555555] text-[#FAFAFA] text-2xl px-3 py-2 rounded-lg z-10 transition-colors" @click="nextSlide">
+                    &#10095;
+                </button>
+
+                <!-- Pista del Carrusel -->
+                <div class="flex transition-transform duration-500 ease-in-out h-[250px] sm:h-[400px] md:h-[500px]" :style="carouselStyle">
+                    <div class="min-w-full h-full">
+                        <img src="/images/carrusel/gym-1.jpg" alt="Instalaciones 1" class="w-full h-full object-cover">
+                    </div>
+                    <div class="min-w-full h-full">
+                        <img src="/images/carrusel/gym-2.jpg" alt="Instalaciones 2" class="w-full h-full object-cover">
+                    </div>
+                    <div class="min-w-full h-full">
+                        <img src="/images/carrusel/gym-3.jpg" alt="Instalaciones 3" class="w-full h-full object-cover">
+                    </div>
+                    <div class="min-w-full h-full">
+                        <img src="/images/carrusel/gym-4.jpg" alt="Instalaciones 3" class="w-full h-full object-cover">
+                    </div>
+                    <div class="min-w-full h-full">
+                        <img src="/images/carrusel/gym-5.jpg" alt="Instalaciones 3" class="w-full h-full object-cover">
+                    </div>
+                    <div class="min-w-full h-full">
+                        <img src="/images/carrusel/gym-6.jpg" alt="Instalaciones 3" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECCIÓN SOBRE MÍ (ESTILO CV) -->
+        <section class="py-16 md:py-24 px-4 bg-[#171717] border-y border-[#3B3B3B]">
+            <div class="max-w-6xl mx-auto">
+                
+                <!-- Título de la sección -->
+                <div class="mb-12 text-center md:text-left md:pl-4 lg:pl-0">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight text-[#FAFAFA]">
+                        Sobre <span class="text-[#D4D4D4]">mí</span>
+                    </h2>
+                    <div class="h-1.5 w-20 bg-[#D4D4D4] mt-4 mx-auto md:mx-0 rounded-full"></div>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-16">
+                    
+                    <!-- Columna Izquierda: Fotografía -->
+                    <div class="w-full md:w-1/3 flex justify-center md:justify-end shrink-0">
+                        <div class="relative group">
+                            <!-- Sombra decorativa desfasada -->
+                            <div class="absolute inset-0 bg-[#555555] rounded-2xl transform translate-x-4 translate-y-4 opacity-30 transition-transform duration-500 group-hover:translate-x-6 group-hover:translate-y-6"></div>
+                            
+                            <!-- Imagen principal -->
+                            <img src="/images/about/01profile.jpg" alt="Perfil de Jonathan Pastor Terrero" 
+                                 class="relative rounded-2xl w-64 h-80 md:w-72 md:h-[400px] lg:w-80 lg:h-[450px] object-cover border border-[#3B3B3B] shadow-2xl z-10 filter grayscale group-hover:grayscale-0 transition duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha: Contenido y Experiencia -->
+                    <div class="w-full md:w-2/3 flex flex-col justify-center">
+                        
+                        <!-- Encabezado del CV -->
+                        <div class="mb-6 text-center md:text-left">
+                            <h3 class="text-2xl md:text-3xl font-bold text-[#EEEEEE] uppercase tracking-wide">Jonathan Pastor Terrero</h3>
+                            <p class="text-[#888888] font-bold tracking-widest uppercase text-xs sm:text-sm mt-2">
+                                Fitness Coaching & Juez Nacional
+                            </p>
+                        </div>
+
+                        <!-- Texto Descriptivo principal -->
+                        <div class="text-[#BBBBBB] text-base md:text-lg leading-relaxed space-y-5 text-justify md:text-left">
+                            <p>
+                                Soy Licenciado en Administración, pero mi verdadera vocación es el Fitness Coaching. Mi camino comenzó a los 13 años en un gimnasio de lucha libre, evolucionando desde la calistenia hasta el entrenamiento de fuerza, donde forjé mi base a través de la experiencia empírica y el trabajo duro. 
+                            </p>
+                            <p>
+                                Lo que inició en 2017 como asesorías para amigos, se transformó en una carrera profesional de alto nivel. Para ofrecerte el mejor respaldo, consolidé mi experiencia con certificaciones de prestigio internacional. Hoy, fusiono la estructura estratégica de la administración con el conocimiento científico y empírico del fitness.
+                            </p>
+                            <p>
+                                <strong class="text-[#EEEEEE]">Mi misión</strong> es guiarte hacia tu mejor versión física con un plan diseñado bajo los más altos estándares de la industria.
+                            </p>
+                        </div>
+
+                        <!-- Lista de ventajas competitivas (Rompe el muro de texto) -->
+                        <div class="mt-8">
+                            <h4 class="text-[#D4D4D4] font-bold uppercase tracking-widest text-sm mb-4">¿Por qué elegir mi asesoría?</h4>
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-6 h-6 text-[#888888] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <p class="text-[#BBBBBB] text-sm md:text-base leading-relaxed">
+                                        <strong class="text-[#EEEEEE]">Experiencia Real:</strong> Más de una década viviendo la cultura del gimnasio.
+                                    </p>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-6 h-6 text-[#888888] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                                    <p class="text-[#BBBBBB] text-sm md:text-base leading-relaxed">
+                                        <strong class="text-[#EEEEEE]">Respaldo Académico:</strong> Metodologías certificadas en entrenamiento y nutrición.
+                                    </p>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-6 h-6 text-[#888888] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                    <p class="text-[#BBBBBB] text-sm md:text-base leading-relaxed">
+                                        <strong class="text-[#EEEEEE]">Visión Profesional:</strong> Como Juez Nacional, entiendo exactamente qué se necesita para lograr un físico de excelencia.
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Caja destacada de Credenciales -->
+                        <div class="mt-8 p-5 bg-[#222222] border-l-4 border-[#D4D4D4] rounded-r-xl shadow-lg">
+                            <h4 class="text-[#EEEEEE] font-black uppercase text-xs tracking-widest mb-2 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-[#888888]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                                Áreas de especialización
+                            </h4>
+                            <p class="text-[#BBBBBB] text-sm leading-relaxed">
+                                Entrenador Profesional y Nutricionista Certificado por el Instituto Iberoamericano de Acondicionamiento Físico y Fitness (IIAFF). Juez Nacional Certificado en FITNESSMANIA MÉXICO.
+                            </p>
+                        </div>
+                        
+                        <!-- Etiquetas de Habilidades (Skills actualizadas) -->
+                        <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-3">
+                            <span class="px-4 py-2 bg-[#222222] border border-[#3B3B3B] text-[#D4D4D4] rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest hover:border-[#D4D4D4] transition-colors cursor-default">
+                                Entrenamiento de Fuerza
+                            </span>
+                            <span class="px-4 py-2 bg-[#222222] border border-[#3B3B3B] text-[#D4D4D4] rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest hover:border-[#D4D4D4] transition-colors cursor-default">
+                                Nutrición Deportiva
+                            </span>
+                            <span class="px-4 py-2 bg-[#222222] border border-[#3B3B3B] text-[#D4D4D4] rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest hover:border-[#D4D4D4] transition-colors cursor-default">
+                                Juez Nacional
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- FOOTER -->
+        <footer class="bg-[#171717] py-8 text-center text-xs md:text-sm text-[#6E6E6E] border-t border-[#3B3B3B]">
+            &copy; 2026 Lionsss Academy. Powered by CesarJam94.
+        </footer>
+
+    </div>
 </template>
 
 <style>
-:root {
-    --primary-blue: #2563eb;
-    --dark-bg: #0f172a;
-    --text-white: #f8fafc;
-}
+/* Solo importamos la fuente, Tailwind se encarga del resto */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.font-montserrat {
     font-family: 'Montserrat', sans-serif;
-}
-
-body {
-    background-color: var(--dark-bg);
-    color: var(--text-white);
-    overflow-x: hidden;
-}
-
-/* --- NAVBAR (CONFIGURACIÓN ESCRITORIO POR DEFECTO) --- */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 5%;
-    background-color: rgba(15, 23, 42, 0.95);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999;
-    backdrop-filter: blur(5px);
-    border-bottom: 1px solid rgba(37, 99, 235, 0.3);
-    transition: all 0.3s ease;
-}
-
-.logo { display: flex; align-items: center; }
-.logo img { height: 60px; width: auto; transition: transform 0.3s ease; }
-.logo img:hover { transform: scale(1.05); }
-
-.hamburger {
-    display: none; /* Oculto en escritorio */
-    font-size: 2rem;
-    cursor: pointer;
-    color: white;
-    background: none;
-    border: none;
-    z-index: 10000;
-}
-
-/* Estilos de botones para ESCRITORIO */
-.nav-buttons {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* Espaciado entre elementos */
-}
-
-.nav-buttons a {
-    text-decoration: none;
-    color: white;
-    font-weight: 700;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.nav-buttons a:hover { color: var(--primary-blue); }
-
-.btn-nav-admin {
-    border: 1px solid var(--primary-blue);
-    padding: 8px 15px;
-    border-radius: 20px;
-}
-
-.btn-nav-admin:hover {
-    background-color: var(--primary-blue);
-    color: white !important;
-}
-
-/* --- HERO SECTION --- */
-.hero {
-    height: 850px;
-    width: 100%;
-    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.9)), url('/images/portada.png');
-    background-size: cover;
-    background-position: center top;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative;
-    margin-top: 90px;
-}
-
-.hero-content { max-width: 800px; padding: 20px; z-index: 2; }
-.hero-content h1 { font-size: 4.5rem; text-transform: uppercase; font-weight: 900; line-height: 1; margin-bottom: 20px; text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8); }
-.hero-content h1 span { color: var(--primary-blue); display: block; }
-.hero-content p { font-size: 1.3rem; margin-bottom: 40px; color: #e2e8f0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); }
-
-/* --- BOTONES --- */
-.cta-container { display: flex; gap: 20px; justify-content: center; }
-.btn { padding: 18px 50px; border-radius: 50px; text-decoration: none; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; }
-.btn-primary { background-color: var(--primary-blue); color: white; box-shadow: 0 0 20px rgba(37, 99, 235, 0.4); }
-.btn-primary:hover { background-color: #1d4ed8; transform: translateY(-3px); box-shadow: 0 0 30px rgba(37, 99, 235, 0.8); }
-.btn-outline { background-color: transparent; border: 2px solid white; color: white; }
-.btn-outline:hover { background-color: white; color: var(--dark-bg); transform: translateY(-3px); }
-
-/* --- INFO BAR --- */
-.info-bar { background-color: #1e293b; padding: 40px 20px; display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; border-bottom: 1px solid #334155; }
-.info-item { display: flex; align-items: center; gap: 15px; }
-.info-icon { font-size: 2rem; color: var(--primary-blue); }
-.info-text h4 { font-size: 1.1rem; color: white; }
-.info-text p { font-size: 0.9rem; color: #94a3b8; }
-
-/* --- GALERÍA / CARRUSEL --- */
-.gallery-section { padding: 60px 20px; text-align: center; background-color: var(--dark-bg); }
-.gallery-title { font-size: 2.5rem; margin-bottom: 40px; text-transform: uppercase; font-weight: 900; }
-.gallery-title span { color: var(--primary-blue); }
-.carousel-container { position: relative; max-width: 1000px; margin: 0 auto; overflow: hidden; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); border: 1px solid #334155; }
-.carousel-track { display: flex; transition: transform 0.5s ease-in-out; height: 500px; }
-.carousel-slide { min-width: 100%; height: 100%; }
-.carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
-.carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(0, 0, 0, 0.5); color: white; border: none; font-size: 2rem; padding: 10px 20px; cursor: pointer; z-index: 10; transition: background 0.3s; }
-.carousel-btn:hover { background-color: var(--primary-blue); }
-.btn-prev { left: 10px; border-radius: 0 10px 10px 0; }
-.btn-next { right: 10px; border-radius: 10px 0 0 10px; }
-
-/* --- FOOTER --- */
-footer { background-color: black; padding: 30px; text-align: center; font-size: 0.8rem; color: #64748b; }
-
-/* --- MEDIA QUERIES (CONFIGURACIÓN PARA MÓVILES) --- */
-@media (max-width: 768px) {
-    .hamburger { display: block; }
-    
-    .nav-buttons {
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: rgba(15, 23, 42, 0.98);
-        border-bottom: 2px solid var(--primary-blue);
-        
-        /* Oculto por defecto en móvil con la transición suave */
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: all .3s ease;
-        gap: 0;
-    }
-    
-    .nav-buttons.active {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-    
-    .nav-buttons a { 
-        margin: 0; 
-        width: 100%; 
-        text-align: center; 
-        display: block; 
-        padding: 20px; 
-        font-size: 1.1rem;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .btn-nav-admin {
-        border: none !important;
-        border-radius: 0 !important;
-    }
-
-    .navbar { 
-        padding: 15px 20px; 
-    }
-
-    .hero { height: 600px; margin-top: 70px;}
-    .hero-content h1 { font-size: 2.8rem; }
-    .cta-container { flex-direction: column; }
-    .carousel-track { height: 300px; }
 }
 </style>

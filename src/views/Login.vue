@@ -37,8 +37,42 @@
           :class="esErrorConfirmacion ? 'text-yellow-500' : 'text-red-500'"
           class="text-sm text-center font-semibold mb-4 px-4"
         >
-          <span v-if="esErrorConfirmacion">⚠️ </span>
-          <span v-else>❌ </span>
+          <span
+            v-if="esErrorConfirmacion"
+            class="inline-flex items-center text-amber-500"
+            title="Advertencia"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-5 h-5"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+          <span
+            v-else
+            class="inline-flex items-center text-red-500"
+            title="Error"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-5 h-5"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
           {{ mensajeError }}
         </div>
 
@@ -148,13 +182,13 @@ input {
 
 input:focus {
   outline: none;
-  border-color: #f39c12; /* Color dorado/naranja del gym */
+  border-color: #d4d4d4; /* Color dorado/naranja del gym */
 }
 
 .btn-ingresar {
   width: 100%;
   padding: 12px;
-  background-color: #f39c12;
+  background-color: #d4d4d4;
   color: #121212;
   border: none;
   border-radius: 6px;
@@ -166,7 +200,7 @@ input:focus {
 }
 
 .btn-ingresar:hover {
-  background-color: #e67e22;
+  background-color: #3b3b3b;
 }
 
 .btn-ingresar:disabled {
