@@ -51,7 +51,7 @@ onUnmounted(() => {
         <!-- NAVBAR -->
         <nav class="fixed top-0 left-0 w-full z-[9999] bg-black/95 backdrop-blur-md border-b border-[#3B3B3B] flex justify-between items-center px-4 md:px-8 py-3 md:py-4 transition-all duration-300">
             <div class="flex items-center">
-                <img src="/images/logo.png" alt="Lionsss Academy Logo" class="h-12 md:h-16 w-auto transition-transform duration-300 hover:scale-105">
+                <img src="/images/logo.png?v=2" alt="Lionsss Academy Logo" class="h-12 md:h-16 w-auto transition-transform duration-300 hover:scale-105">
             </div>
 
             <!-- Botón Hamburguesa Móvil -->
