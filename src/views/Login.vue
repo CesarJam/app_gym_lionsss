@@ -1,14 +1,27 @@
 <template>
   <div class="login-container">
     <div class="login-box">
-      <img
+      
+      <!-- Botón para regresar al Home -->
+      <div class="text-left mb-6">
+        <router-link to="/" class="inline-flex items-center gap-2 text-[#888888] hover:text-[#D4D4D4] transition-colors text-xs uppercase font-bold tracking-wide">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Volver al inicio
+        </router-link>
+      </div>
+
+     
+      
+      <h2>ACCESO AL SISTEMA</h2>
+      <br>
+       <img
         src="/images/logo.png"
         alt="Lionsss Logo"
         class="logo"
-        v-if="false"
       />
-      <h2>ACCESO AL SISTEMA</h2>
-      <p class="subtitle">Lionsss Academy</p>
+      <br>
 
       <form @submit.prevent="iniciarSesion">
         <div class="input-group">
@@ -16,7 +29,7 @@
           <input
             type="email"
             v-model="email"
-            placeholder="admin@lionsss.com"
+            placeholder="lionsss@lionsss.com"
             required
           />
         </div>
@@ -133,15 +146,16 @@ const iniciarSesion = async () => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #121212; /* Fondo oscuro */
+  background-color: #171717; /* Ajustado para hacer match perfecto con la paleta de Tailwind del Home */
   color: white;
 }
 
 .login-box {
-  background-color: #1e1e1e;
+  background-color: #222222;
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border-top: 4px solid #D4D4D4; /* Detalle premium acorde a la marca */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
   width: 100%;
   max-width: 400px;
   text-align: center;
@@ -154,8 +168,12 @@ h2 {
 }
 
 .subtitle {
-  color: #888;
+  color: #888888;
   margin-bottom: 30px;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: bold;
 }
 
 .input-group {
@@ -166,50 +184,73 @@ h2 {
 label {
   display: block;
   margin-bottom: 8px;
-  font-size: 14px;
-  color: #ccc;
+  font-size: 12px;
+  color: #888888;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 input {
   width: 100%;
   padding: 12px;
-  background-color: #2a2a2a;
-  border: 1px solid #333;
+  background-color: #171717;
+  border: 1px solid #3B3B3B;
   border-radius: 6px;
   color: white;
   font-size: 16px;
+  transition: all 0.3s ease;
 }
 
 input:focus {
   outline: none;
-  border-color: #d4d4d4; /* Color dorado/naranja del gym */
+  border-color: #D4D4D4; 
+  box-shadow: 0 0 0 1px #D4D4D4;
 }
 
 .btn-ingresar {
   width: 100%;
-  padding: 12px;
-  background-color: #d4d4d4;
-  color: #121212;
+  padding: 14px;
+  background-color: #D4D4D4;
+  color: #171717;
   border: none;
   border-radius: 6px;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
   margin-top: 10px;
 }
 
 .btn-ingresar:hover {
-  background-color: #3b3b3b;
+  background-color: #FAFAFA;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(212, 212, 212, 0.2);
 }
 
 .btn-ingresar:disabled {
-  background-color: #555;
+  background-color: #3B3B3B;
+  color: #888888;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.logo {
+  width: 230px; 
+  height: auto;
+  margin: 0 auto 15px auto; 
+  display: block;
+  transition: transform 0.3s ease; /* Transición suave en CSS puro */
+}
+
+.logo:hover {
+  transform: scale(1.05); /* Efecto de crecimiento al pasar el cursor */
 }
 
 .error-msg {
-  color: #e74c3c;
+  color: #ef4444;
   font-size: 14px;
   margin-bottom: 15px;
 }
