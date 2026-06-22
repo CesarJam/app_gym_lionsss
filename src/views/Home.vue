@@ -14,7 +14,7 @@ const closeMenu = () => {
 
 // --- LÓGICA DEL CARRUSEL ---
 const currentSlide = ref(0)
-const totalSlides = 6
+const totalSlides = 7
 const carouselStyle = ref('transform: translateX(0%)')
 
 const updateCarousel = () => {
@@ -49,7 +49,7 @@ onUnmounted(() => {
     <div class="min-h-screen bg-[#222222] text-[#FAFAFA] font-montserrat overflow-x-hidden">
         
         <!-- NAVBAR -->
-        <nav class="fixed top-0 left-0 w-full z-[9999] bg-[#222222]/95 backdrop-blur-md border-b border-[#3B3B3B] flex justify-between items-center px-4 md:px-8 py-3 md:py-4 transition-all duration-300">
+        <nav class="fixed top-0 left-0 w-full z-[9999] bg-black/95 backdrop-blur-md border-b border-[#3B3B3B] flex justify-between items-center px-4 md:px-8 py-3 md:py-4 transition-all duration-300">
             <div class="flex items-center">
                 <img src="/images/logo.png" alt="Lionsss Academy Logo" class="h-12 md:h-16 w-auto transition-transform duration-300 hover:scale-105">
             </div>
@@ -61,12 +61,10 @@ onUnmounted(() => {
 
             <!-- Enlaces Nav -->
             <div :class="isMenuActive ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4 md:opacity-100 md:visible md:translate-y-0'" 
-                 class="absolute top-full left-0 w-full md:w-auto md:static bg-[#222222]/98 md:bg-transparent border-b-2 border-[#555555] md:border-none flex flex-col md:flex-row md:items-center gap-0 md:gap-6 transition-all duration-300 ease-in-out shadow-xl md:shadow-none">
+                 class="absolute top-full left-0 w-full md:w-auto md:static bg-black/98 md:bg-transparent border-b-2 border-[#555555] md:border-none flex flex-col md:flex-row md:items-center gap-0 md:gap-6 transition-all duration-300 ease-in-out shadow-xl md:shadow-none">
                 
-                
-
                 <div class="p-4 md:p-0 flex justify-center">
-                    <a href="/admin/login" @click="closeMenu" class="inline-block border border-[#D4D4D4] text-[#D4D4D4] font-bold px-6 py-2 rounded-full hover:bg-[#D4D4D4] hover:text-[#222222] transition-all duration-300 text-lg md:text-sm">
+                    <a href="/admin/login" @click="closeMenu" class="inline-block border border-[#D4D4D4] text-[#D4D4D4] font-bold px-6 py-2 rounded-full hover:bg-[#D4D4D4] hover:text-black transition-all duration-300 text-lg md:text-sm">
                         INGRESAR
                     </a>
                 </div>
@@ -78,21 +76,29 @@ onUnmounted(() => {
             <!-- Overlay oscuro -->
             <div class="absolute inset-0 bg-gradient-to-b from-[#222222]/60 to-[#222222]/95 z-0"></div>
             
-            <div class="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
-                <h1 class="text-3xl sm:text-5xl md:text-7xl font-black uppercase leading-tight mb-4 text-[#FAFAFA] drop-shadow-xl">
-                    BIENVENIDO A <br> 
-                    <span class="text-[#D4D4D4] block mt-2">LA MANADA</span>
+            <div class="relative z-10 max-w-3xl mx-auto flex flex-col items-center text-center">
+                
+                <!-- Aumentamos drásticamente el tamaño del texto aquí -->
+                <h1 class="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black uppercase leading-tight mb-4 text-[#FAFAFA]">
+                    
+                    <!-- Contenedor del efecto Split Text -->
+                    <div class="split-text-container mt-2">
+                        BIENVENIDO
+                        <span>BIENVENIDO</span>
+                        <span>BIENVENIDO</span>
+                        <span>A LA MANADA</span>
+                    </div>
                 </h1>
-                <p class="text-sm sm:text-base md:text-xl mb-8 text-[#BBBBBB] drop-shadow-md max-w-2xl px-2">
+                
+                <p class="text-sm sm:text-base md:text-xl mb-8 text-[#BBBBBB] drop-shadow-md max-w-2xl px-2 mt-4">
                     La plataforma definitiva para gestionar tu rendimiento, tus socios y tu éxito.
                 </p>
 
                 <!-- Botones CTA -->
                 <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-4 justify-center items-center px-4 sm:px-0">
-                    <router-link to="/admin/login" class="w-full sm:w-auto px-6 py-4 md:px-10 rounded-full font-extrabold text-sm md:text-base uppercase tracking-wide bg-[#D4D4D4] text-[#222222] transition-all duration-300 hover:bg-[#FAFAFA] hover:-translate-y-1 shadow-[0_0_15px_rgba(212,212,212,0.3)] hover:shadow-[0_0_25px_rgba(212,212,212,0.6)] text-center">
+                    <router-link to="/admin/login" class="w-full sm:w-auto px-6 py-4 md:px-10 rounded-md font-extrabold text-sm md:text-base uppercase tracking-wide bg-[#D4D4D4] text-[#222222] transition-all duration-300 hover:bg-[#FAFAFA] hover:-translate-y-1 shadow-[0_0_15px_rgba(212,212,212,0.3)] hover:shadow-[0_0_25px_rgba(212,212,212,0.6)] text-center">
                         GESTIONAR GIMNASIO
                     </router-link>
-                    
                 </div>
             </div>
         </section>
@@ -159,22 +165,25 @@ onUnmounted(() => {
                 <!-- Pista del Carrusel -->
                 <div class="flex transition-transform duration-500 ease-in-out h-[250px] sm:h-[400px] md:h-[500px]" :style="carouselStyle">
                     <div class="min-w-full h-full">
-                        <img src="/images/carrusel/gym-1.jpg" alt="Instalaciones 1" class="w-full h-full object-cover">
+                        <img src="/images/carrusel/gym-1.jpg" alt="carrusel-01" class="w-full h-full object-cover">
                     </div>
                     <div class="min-w-full h-full">
-                        <img src="/images/carrusel/gym-2.jpg" alt="Instalaciones 2" class="w-full h-full object-cover">
+                        <img src="/images/carrusel/gym-2.jpg" alt="carrusel-02" class="w-full h-full object-cover">
                     </div>
                     <div class="min-w-full h-full">
-                        <img src="/images/carrusel/gym-3.jpg" alt="Instalaciones 3" class="w-full h-full object-cover">
+                        <img src="/images/carrusel/gym-3.jpg" alt="carrusel-03" class="w-full h-full object-cover">
                     </div>
                     <div class="min-w-full h-full">
-                        <img src="/images/carrusel/gym-4.jpg" alt="Instalaciones 3" class="w-full h-full object-cover">
+                        <img src="/images/carrusel/gym-4.jpg" alt="carrusel-04" class="w-full h-full object-cover">
                     </div>
                     <div class="min-w-full h-full">
-                        <img src="/images/carrusel/gym-5.jpg" alt="Instalaciones 3" class="w-full h-full object-cover">
+                        <img src="/images/carrusel/gym-5.jpg" alt="carrusel-05" class="w-full h-full object-cover">
                     </div>
                     <div class="min-w-full h-full">
-                        <img src="/images/carrusel/gym-6.jpg" alt="Instalaciones 3" class="w-full h-full object-cover">
+                        <img src="/images/carrusel/gym-6.jpg" alt="carrusel-06" class="w-full h-full object-cover">
+                    </div>
+                    <div class="min-w-full h-full">
+                        <img src="/images/carrusel/gym-7.jpg" alt="carrusel-07" class="w-full h-full object-cover">
                     </div>
                 </div>
             </div>
@@ -298,5 +307,64 @@ onUnmounted(() => {
 
 .font-montserrat {
     font-family: 'Montserrat', sans-serif;
+}
+
+/* --- EFECTO SPLIT TEXT (LA MANADA) --- */
+.split-text-container {
+    position: relative;
+    display: inline-block;
+    color: transparent; /* Oculta el texto base, pero mantiene el ancho/alto en el HTML */
+    cursor: default;
+}
+
+/* Mitad Superior */
+.split-text-container span:nth-child(1) {
+    position: absolute;
+    top: 0; left: 0;
+    color: #D4D4D4; /* Color base */
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+    overflow: hidden;
+    width: 100%;
+}
+
+.split-text-container:hover span:nth-child(1) {
+    transform: translateY(-15px); /* Sube la mitad superior */
+}
+
+/* Mitad Inferior */
+.split-text-container span:nth-child(2) {
+    position: absolute;
+    top: 0; left: 0;
+    color: #D4D4D4; /* Color base */
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+    overflow: hidden;
+    width: 100%;
+}
+
+.split-text-container:hover span:nth-child(2) {
+    transform: translateY(15px); /* Baja la mitad inferior */
+}
+
+/* Mensaje Revelado en el Centro */
+.split-text-container span:nth-child(3) {
+    position: absolute;
+    top: 50%; left: 0;
+    transform: translateY(-50%) scaleY(0);
+    width: 100%;
+    color: #030169; /* Letra oscura */
+    background: #d4d4d4; /* Fondo claro que contrasta */
+    font-size: 0.22em; /* Hace la letra pequeña en proporción al texto grande */
+    font-weight: 800;
+    letter-spacing: 0.4em;
+    text-align: center;
+    padding: 6px 0;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 10;
+}
+
+.split-text-container:hover span:nth-child(3) {
+    transform: translateY(-50%) scaleY(1); /* Revela el mensaje */
 }
 </style>
