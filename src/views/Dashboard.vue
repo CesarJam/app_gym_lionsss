@@ -9,10 +9,11 @@
     >
       <div class="flex items-center gap-3">
         <img
-          src="/images/logo.png"
+          src="/images/logos/logoLionssgrey.png"
           class="h-10 w-auto object-contain"
           alt="Logo Lionsss"
         />
+
         <h2
           class="text-[#D4D4D4] font-black tracking-widest text-lg m-0 uppercase leading-tight"
         >
@@ -73,17 +74,17 @@
       <!-- Cabecera del Sidebar (Solo visible en escritorio, en móvil está en la barra superior) -->
       <div class="hidden md:block p-6 text-center border-b border-[#3B3B3B]">
         <img
-          src="/images/logo.png"
-          class="w-20 h-20 mx-auto mb-3 object-contain"
+          src="/images/logos/logoLionssgrey.png"
+          class="w-40 h-20 mx-auto mb-3 object-contain"
           alt="Logo Lionsss"
         />
         <h2
-          class="text-[#D4D4D4] font-black tracking-widest text-xl m-0 uppercase"
+          class="text-[#222222] font-black tracking-widest text-xl m-0 uppercase"
         >
           Lionsss
         </h2>
         <h2
-          class="text-[#D4D4D4] font-black tracking-widest text-xl m-0 uppercase"
+          class="text-[#222222] font-black tracking-widest text-xl m-0 uppercase"
         >
           Academy
         </h2>
@@ -161,7 +162,7 @@
       <div class="p-5 border-t border-[#3B3B3B]">
         <button
           @click="cerrarSesion"
-          class="w-full py-3 px-4 bg-transparent border-2 border-red-900/50 text-red-500 font-bold uppercase tracking-wide text-sm rounded-lg transition-all duration-300 hover:bg-red-500 hover:text-white hover:border-red-500"
+          class="w-full py-3 px-4 bg-[#202A78] text-white font-bold uppercase tracking-wide text-sm rounded-lg transition-all duration-300 hover:bg-[#1c256b]"
         >
           Cerrar Sesión
         </button>
@@ -182,13 +183,13 @@
             >
 
             <img
-              src="/images/brave-svgrepo-com.svg"
+              src="/images/logos/iconocompleto.png"
               alt="Logo León"
-              class="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 drop-shadow-md transition-transform hover:scale-150"
+              class="h-10 sm:h-12 w-auto object-contain flex-shrink-0 drop-shadow-md transition-transform hover:scale-105"
             />
           </h1>
           <span
-            class="bg-[#D4D4D4] text-[#222222] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest shadow-[0_0_10px_rgba(212,212,212,0.2)]"
+            class="bg-[#D4D4D4] text-[#222222] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest shadow-[0_0_10px_rgba(212,212,212,0.2)] hover:bg-[#202A78] hover:text-white transition-colors duration-300 cursor-default"
           >
             {{ rolUsuario }}
           </span>

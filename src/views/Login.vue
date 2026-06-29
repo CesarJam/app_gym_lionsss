@@ -1,27 +1,37 @@
 <template>
   <div class="login-container">
     <div class="login-box">
-      
-      <!-- Botón para regresar al Home -->
       <div class="text-left mb-6">
-        <router-link to="/" class="inline-flex items-center gap-2 text-[#888888] hover:text-[#D4D4D4] transition-colors text-xs uppercase font-bold tracking-wide">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        <div class="h-1 w-16 mb-4 rounded-full"></div>
+        <router-link
+          to="/"
+          class="inline-flex items-center gap-2 text-[#888888] hover:text-[#202A78] transition-colors text-xs uppercase font-bold tracking-wide"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            ></path>
           </svg>
           Volver al inicio
         </router-link>
       </div>
 
-     
-      
       <h2>ACCESO AL SISTEMA</h2>
-      <br>
-       <img
-        src="/images/logo.png"
+      <br />
+      <img
+        src="/images/logos/logoLionssgrey.png"
         alt="Lionsss Logo"
         class="logo"
       />
-      <br>
+      <br />
 
       <form @submit.prevent="iniciarSesion">
         <div class="input-group">
@@ -44,7 +54,6 @@
           />
         </div>
 
-        <!-- Mensaje de Error Dinámico -->
         <div
           v-if="mensajeError"
           :class="esErrorConfirmacion ? 'text-yellow-500' : 'text-red-500'"
@@ -154,7 +163,7 @@ const iniciarSesion = async () => {
   background-color: #222222;
   padding: 40px;
   border-radius: 12px;
-  border-top: 4px solid #D4D4D4; /* Detalle premium acorde a la marca */
+  border-top: 3px solid #202a78; /* Detalle premium acorde a la marca */
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
   width: 100%;
   max-width: 400px;
@@ -195,7 +204,7 @@ input {
   width: 100%;
   padding: 12px;
   background-color: #171717;
-  border: 1px solid #3B3B3B;
+  border: 1px solid #3b3b3b;
   border-radius: 6px;
   color: white;
   font-size: 16px;
@@ -204,14 +213,14 @@ input {
 
 input:focus {
   outline: none;
-  border-color: #D4D4D4; 
-  box-shadow: 0 0 0 1px #D4D4D4;
+  border-color: #d4d4d4;
+  box-shadow: 0 0 0 1px #d4d4d4;
 }
 
 .btn-ingresar {
   width: 100%;
   padding: 14px;
-  background-color: #D4D4D4;
+  background-color: #d4d4d4;
   color: #171717;
   border: none;
   border-radius: 6px;
@@ -224,13 +233,13 @@ input:focus {
 }
 
 .btn-ingresar:hover {
-  background-color: #FAFAFA;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(212, 212, 212, 0.2);
+  background-color: #202a78;
+  color: #ffffff;
+  border-color: #202a78; /* Opcional, por si tu botón tiene un borde definido */
 }
 
 .btn-ingresar:disabled {
-  background-color: #3B3B3B;
+  background-color: #3b3b3b;
   color: #888888;
   cursor: not-allowed;
   transform: none;
@@ -238,9 +247,9 @@ input:focus {
 }
 
 .logo {
-  width: 230px; 
+  width: 230px;
   height: auto;
-  margin: 0 auto 15px auto; 
+  margin: 0 auto 15px auto;
   display: block;
   transition: transform 0.3s ease; /* Transición suave en CSS puro */
 }
