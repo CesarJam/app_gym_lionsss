@@ -771,13 +771,22 @@ const guardarDatos = async () => {
     ]);
     if (perfilError) throw perfilError;
 
-    // 3. ACTUALIZAMOS EL EXPEDIENTE EN LA TABLA ASESORADOS
+    // 3. PREPARAMOS Y SANITIZAMOS LOS DATOS
     const datosActualizados = {
       ...form.value,
       id_auth: authData.user.id,
       estado_registro: "completado",
     };
 
+    // --- CORRECCIÓN: Evitamos enviar textos vacíos ("") a campos tipo Date en Supabase ---
+    if (datosActualizados.fecha_nacimiento === "") {
+      datosActualizados.fecha_nacimiento = null;
+    }
+    if (datosActualizados.fecha_proximo_periodo === "") {
+      datosActualizados.fecha_proximo_periodo = null;
+    }
+
+    // 4. ACTUALIZAMOS EL EXPEDIENTE EN LA TABLA ASESORADOS
     const { error: updateError } = await supabase
       .from("asesorados")
       .update(datosActualizados)
